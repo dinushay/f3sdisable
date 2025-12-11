@@ -11,7 +11,7 @@ import xland.mcmod.f3sconfirm.F3SConfirmClient;
 @Mixin(Keyboard.class)
 public abstract class KeyboardMixin {
 
-        @Inject(method = "processF3", at = @At("HEAD"), cancellable = true)
+        @Inject(method = {"processF3", "method_1468"}, at = @At("HEAD"), cancellable = true)
     private void cancelF3S(int key, CallbackInfoReturnable<Boolean> cir) {
         if (key == GLFW.GLFW_KEY_S) {   // another check
             F3SConfirmClient.debugError(F3SConfirmClient.getTerminationText());
