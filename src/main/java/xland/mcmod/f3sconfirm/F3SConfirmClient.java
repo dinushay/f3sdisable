@@ -12,7 +12,6 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.ClickEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -40,17 +39,14 @@ public class F3SConfirmClient implements ClientModInitializer {
     public static void execute(MinecraftClient client, Consumer<? super Text> feedbackSender) {
         Path path = TextureUtil.getDebugTexturePath(client.runDirectory.toPath()).toAbsolutePath();
         client.getTextureManager().dumpDynamicTextures(path);
-        Text textInside = Text.literal(path.toString()).formatted(Formatting.UNDERLINE)
-                .styled(s -> s.withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, path.toString())));
+        Text textInside = Text.literal(path.toString()).formatted(Formatting.UNDERLINE);
         feedbackSender.accept(Text.translatable("debug.dump_dynamic_textures", textInside));
     }
 
     public static Text getTerminationText() {
         return Text.translatableWithFallback("f3sconfirm.terminate",
                 "Dumping dynamic textures with F3+S is disabled.\nType `/f3sconfirm` to confirm dumping.",
-                Text.literal("/f3sconfirm")
-                        .formatted(Formatting.UNDERLINE)
-                        .styled(s -> s.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/f3sconfirm")))
+                Text.literal("/f3sconfirm").formatted(Formatting.UNDERLINE)
         ).formatted(Formatting.RED);
     }
 
